@@ -1,2 +1,11 @@
-<h1>Employee#index</h1>
-<p>Find me in app/views/employee/index.html.erb</p>
+
+<div class="container">
+  <div class="row">
+    <h1>Employee File Upload</h1>
+    <%= form_for :employee, url: employee_dashboard_path, id: 'employee_form' do |f| %>
+      <%= f.file_field :employee_data, accept: '.xlsx, .xls, .csv', class: 'form-control', required: true %>
+      <br/>
+      <%= f.submit 'Import', class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>

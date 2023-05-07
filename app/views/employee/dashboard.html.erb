@@ -1,2 +1,81 @@
 <h1>Employee#dashboard</h1>
 <p>Find me in app/views/employee/dashboard.html.erb</p>
+
+<% if @employee_data.present? %>
+<% @employee_data.each do |employee_data| %>
+<%= employee_data[0] %>
+<% employee_data[1].each do |data| %>
+<%= data[1] %>
+<% end %><br>
+<% end %>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css" />
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
+
+<table id="employee-datatable" >
+  <thead>
+    <tr>
+      <th>Site</th>
+      <th>Permanent</th>
+      <th>Contract</th>
+      <th>Permanent Male</th>
+      <th>Permanent Female</th>
+      <th>Contract Male</th>
+      <th>Contract Female</th>
+      <th>Overall Workforce</th>
+      <th>Male:Female Ratio</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @employee_table_data.each do |employee_data| %>
+      <tr>
+        <% employee_data.each do |data| %>
+          <td><%= data %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+
+<%= @employee_table_data %>
+<%= @employee_chart_data %>
+
+<%= line_chart({"2021-01-01" => 2, "2021-01-02" => 3}) %>
+<%= line_chart [
+  {:name=>"MR", :data=>{"mumbai"=>41, "chennai"=>66, "pune"=>73, "delhi"=>44}},
+  {:name=>"CT", :data=>{"mumbai"=>4, "chennai"=>6, "pune"=>8, "delhi"=>52}},
+  {:name=>"XR", :data=>{"mumbai"=>1}},
+  {:name=>"US", :data=>{"chennai"=>1, "pune"=>1}}
+] %>
+
+<%= line_chart @employee_chart_data %>
+<%= pie_chart @employee_chart_data %>
+
+<%= pie_chart @employee_data.map{|i| p i[0], i[1][:permanent]}, title: "India Permanent" %>
+<%= pie_chart @employee_data.map{|i| p i[0], i[1][:contract]}, title: "India Contract" %>
+
+<script type="text/javascript">
+// document.addEventListener('turbolinks:load', function() {
+
+//   $('#employee-datatable').DataTable({
+//     "columnDefs": [ { targets: 'no-sort', orderable: false }]
+//   )}
+
+// });
+  $(document).ready(function() {
+    $('#employee-datatable').DataTable({
+      "ordering": false,
+      "dom": 'Bfrtip',
+      "buttons": [ "csv", "excel", "pdf" ]
+    });
+  });
+</script>
+
