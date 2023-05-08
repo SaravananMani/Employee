@@ -21,5 +21,15 @@ Things you may want to cover:
 
 * Deployment instructions
 
+
+* git clone git@github.com:SaravananMani/Employee.git
+
+* bundle install
+
+* rails webpacker:install (before check npm(8.11.0), yarn(1.21.1) and node(v16.15.1))
+
+* run rails server
+
 * ...
 # Employee
+
